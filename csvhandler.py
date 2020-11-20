@@ -8,7 +8,7 @@ class Dict:
 
 
 class Read:
-    def dataframe(self, file):
+    def dataFrame(self, file):
         return list(csv.reader(open(file, 'r', encoding='utf-8'), delimiter=','))
 
 
