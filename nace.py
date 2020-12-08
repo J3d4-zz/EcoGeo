@@ -4,9 +4,9 @@ from tqdm import tqdm
 write = csvhandler.Write()
 read = csvhandler.Read()
 
-inp = read.dataframe('/mnt/d/Work/NACE/data/miskolc_out_in.csv')
+inp = read.dataFrame('/mnt/d/Work/NACE/data/miskolc_out_in.csv')
 miskolc = [csvhandler.Dict(i, inp[0]) for i in inp[1:]]
-inp2 = read.dataframe('/mnt/d/Work/NACE/data/nace.csv')
+inp2 = read.dataFrame('/mnt/d/Work/NACE/data/nace.csv')
 nace = [csvhandler.Dict(i, inp2[0]) for i in inp2[1:]]
 out = '/mnt/d/Work/NACE/data/miskolc_out_out.csv.csv'
 head = write.header(miskolc)

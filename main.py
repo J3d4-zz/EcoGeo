@@ -4,68 +4,129 @@ from tqdm import tqdm
 write = csvhandler.Write()
 read = csvhandler.Read()
 # inputs
-inp = read.dataFrame('/mnt/d/Work/NACE/data/miskolc_out_in.csv')
+inp = read.dataFrame('/mnt/c/Work/NACE/data/miskolc_out_in3.csv')
 miskolc = [csvhandler.Dict(i, inp[0]) for i in inp[1:]]
-inp2 = read.dataFrame('/mnt/d/Work/NACE/data/miskolc_branchout.csv')
-miskolcBranch = [csvhandler.Dict(i, inp2[0]) for i in inp2[1:]]
-inp3 = read.dataFrame('/mnt/d/Work/NACE/data/miskolc_sitesout.csv')
-miskolcSites = [csvhandler.Dict(i, inp3[0]) for i in inp3[1:]]
 # outputs
-out1 = '/mnt/d/Work/NACE/data/miskolc_branches_out.csv'
-out2 = '/mnt/d/Work/NACE/data/miskolc_sites_out.csv'
-head1 = write.header(miskolcBranch)
-head2 = write.header(miskolcSites)
+out1 = '/mnt/c/Work/NACE/data/miskolc_out_in4.csv'
+head1 = write.header(miskolc)
 ##############################################################
 
 
-def calculateBranch(miskolc, miskolcBranch):
-    print("Calculations with Branches in miskolc:")
-    for i in tqdm(range(len(miskolcBranch))):
-        for j in range(len(miskolc)):
-            if miskolcBranch[i].ID.strip() == miskolc[j].ID.strip():
-                miskolcBranch[i].SECTION = miskolc[j].SECTION
-                miskolcBranch[i].DIVISION = miskolc[j].DIVISION
-                miskolcBranch[i].GROUP = miskolc[j].GROUP
-                miskolcBranch[i].CLASS = miskolc[j].CLASS
-                miskolcBranch[i].LegalStatus = miskolc[j].LegalStatus
-                miskolcBranch[i].ActiveFrom = miskolc[j].ActiveFrom
-                miskolcBranch[i].ActiveUntil = miskolc[j].ActiveUntil
+def calculateBranch(miskolc):
+    print("Calculations with Branches:")
+    for i in tqdm(range(len(miskolc))):
+        ActiveFromYear = 0
+        ActiveUntilYear = 3000
+        
+        if(miskolc[i].ActiveUntilYear != ""):
+            ActiveUntilYear = int(miskolc[i].ActiveUntilYear)
+        if(miskolc[i].ActiveFromYear != ""):
+            ActiveFromYear = int(miskolc[i].ActiveFromYear)
+        
+        if("miskolc" in miskolc[i].Headquarter or "Miskolc" in miskolc[i].Headquarter):
+            if(ActiveUntilYear >= 2018):
+                if(ActiveFromYear <= 2018):
+                    miskolc[i].Active2018 = 1
+                else:
+                    miskolc[i].Active2018 = 0
+            else:
+                miskolc[i].Active2018 = 0
+            if(ActiveUntilYear >= 2017):
+                if(ActiveFromYear <= 2017):
+                    miskolc[i].Active2017 = 1
+                else:
+                    miskolc[i].Active2017 = 0
+            else:
+                miskolc[i].Active2017 = 0
+            if(ActiveUntilYear >= 2016):
+                if(ActiveFromYear <= 2016):
+                    miskolc[i].Active2016 = 1
+                else:
+                    miskolc[i].Active2016 = 0
+            else:
+                miskolc[i].Active2016 = 0
+            if(ActiveUntilYear >= 2015):
+                if(ActiveFromYear <= 2015):
+                    miskolc[i].Active2015 = 1
+                else:
+                    miskolc[i].Active2015 = 0
+            else:
+                miskolc[i].Active2015 = 0
+            if(ActiveUntilYear >= 2014):
+                if(ActiveFromYear <= 2014):
+                    miskolc[i].Active2014 = 1
+                else:
+                    miskolc[i].Active2014 = 0
+            else:
+                miskolc[i].Active2014 = 0
+            if(ActiveUntilYear >= 2013):
+                if(ActiveFromYear <= 2013):
+                    miskolc[i].Active2013 = 1
+                else:
+                    miskolc[i].Active2013 = 0
+            else:
+                miskolc[i].Active2013 = 0
+            if(ActiveUntilYear >= 2012):
+                if(ActiveFromYear <= 2012):
+                    miskolc[i].Active2012 = 1
+                else:
+                    miskolc[i].Active2012 = 0
+            else:
+                miskolc[i].Active2012 = 0
+            if(ActiveUntilYear >= 2011):
+                if(ActiveFromYear <= 2011):
+                    miskolc[i].Active2011 = 1
+                else:
+                    miskolc[i].Active2011 = 0
+            else:
+                miskolc[i].Active2011 = 0
+            if(ActiveUntilYear >= 2010):
+                if(ActiveFromYear <= 2010):
+                    miskolc[i].Active2010 = 1
+                else:
+                    miskolc[i].Active2010 = 0
+            else:
+                miskolc[i].Active2010 = 0
+            if(ActiveUntilYear >= 2009):
+                if(ActiveFromYear <= 2009):
+                    miskolc[i].Active2009 = 1
+                else:
+                    miskolc[i].Active2009 = 0
+            else:
+                miskolc[i].Active2009 = 0
+            if(ActiveUntilYear >= 2008):
+                if(ActiveFromYear <= 2008):
+                    miskolc[i].Active2008 = 1
+                else:
+                    miskolc[i].Active2008 = 0
+            else:
+                miskolc[i].Active2008 = 0
+        else:
+            miskolc[i].Active2008 = 0
+            miskolc[i].Active2009 = 0
+            miskolc[i].Active2010 = 0
+            miskolc[i].Active2011 = 0
+            miskolc[i].Active2012 = 0
+            miskolc[i].Active2013 = 0
+            miskolc[i].Active2014 = 0
+            miskolc[i].Active2015 = 0
+            miskolc[i].Active2016 = 0
+            miskolc[i].Active2017 = 0
+            miskolc[i].Active2018 = 0
+        
+        # miskolc[i].ActiveFromYear = miskolc[i].ActiveFrom[-4:]
+        # miskolc[i].ActiveUntilYear = miskolc[i].ActiveUntil[-4:]
 
     print("Miskolc done.")
-    return miskolcBranch
+    return miskolc
 
 
-def calculateSites(miskolc, miskolcSites):
-    print("Calculations with Sites in miskolc:")
-    for i in tqdm(range(len(miskolcSites))):
-        for j in range(len(miskolc)):
-            if miskolcSites[i].ID.strip() == miskolcSites[j].ID.strip():
-                miskolcSites[i].SECTION = miskolc[j].SECTION
-                miskolcSites[i].DIVISION = miskolc[j].DIVISION
-                miskolcSites[i].GROUP = miskolc[j].GROUP
-                miskolcSites[i].CLASS = miskolc[j].CLASS
-                miskolcSites[i].LegalStatus = miskolc[j].LegalStatus
-                miskolcSites[i].ActiveFrom = miskolc[j].ActiveFrom
-                miskolcSites[i].ActiveUntil = miskolc[j].ActiveUntil
-
-    print("Miskolc done.")
-    return miskolcSites
-
-
-def Writer1(output, head, data):
+def Writer(output, head, data):
     print("Writing Miskolc-out")
     write.writer(output, head, data)
-
-
-def Writer2(output, head, data):
-    print("Writing Miskolc-out")
-    write.writer(output, head, data)
-
 
 # for debugging purposes:
 if __name__ == '__main__':
-    calculateBranch(miskolc, miskolcBranch)
-    Writer1(out1, head1, miskolcBranch)
-    calculateSites(miskolc, miskolcSites)
-    Writer2(out2, head2, miskolcSites)
+    calculateBranch(miskolc)
+    Writer(out1, head1, miskolc)
     print(" ")
