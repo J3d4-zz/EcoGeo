@@ -4,129 +4,77 @@ from tqdm import tqdm
 write = csvhandler.Write()
 read = csvhandler.Read()
 # inputs
-inp = read.dataFrame('/mnt/c/Work/NACE/data/miskolc_out_in3.csv')
+inp = read.dataFrame('/mnt/d/Work/NACE/data/miskolc_branches_out4.csv')
 miskolc = [csvhandler.Dict(i, inp[0]) for i in inp[1:]]
+inp2 = read.dataFrame('/mnt/d/Work/NACE/data/nace.csv')
+nace = [csvhandler.Dict(i, inp2[0]) for i in inp2[1:]]
 # outputs
-out1 = '/mnt/c/Work/NACE/data/miskolc_out_in4.csv'
-head1 = write.header(miskolc)
+out1 = '/mnt/d/Work/NACE/data/miskolc_branches_out_in_sum.csv'
+head1 = write.header(nace)
 ##############################################################
 
 
-def calculateBranch(miskolc):
-    print("Calculations with Branches:")
-    for i in tqdm(range(len(miskolc))):
-        ActiveFromYear = 0
-        ActiveUntilYear = 3000
-        
-        if(miskolc[i].ActiveUntilYear != ""):
-            ActiveUntilYear = int(miskolc[i].ActiveUntilYear)
-        if(miskolc[i].ActiveFromYear != ""):
-            ActiveFromYear = int(miskolc[i].ActiveFromYear)
-        
-        if("miskolc" in miskolc[i].Headquarter or "Miskolc" in miskolc[i].Headquarter):
-            if(ActiveUntilYear >= 2018):
-                if(ActiveFromYear <= 2018):
-                    miskolc[i].Active2018 = 1
-                else:
-                    miskolc[i].Active2018 = 0
-            else:
-                miskolc[i].Active2018 = 0
-            if(ActiveUntilYear >= 2017):
-                if(ActiveFromYear <= 2017):
-                    miskolc[i].Active2017 = 1
-                else:
-                    miskolc[i].Active2017 = 0
-            else:
-                miskolc[i].Active2017 = 0
-            if(ActiveUntilYear >= 2016):
-                if(ActiveFromYear <= 2016):
-                    miskolc[i].Active2016 = 1
-                else:
-                    miskolc[i].Active2016 = 0
-            else:
-                miskolc[i].Active2016 = 0
-            if(ActiveUntilYear >= 2015):
-                if(ActiveFromYear <= 2015):
-                    miskolc[i].Active2015 = 1
-                else:
-                    miskolc[i].Active2015 = 0
-            else:
-                miskolc[i].Active2015 = 0
-            if(ActiveUntilYear >= 2014):
-                if(ActiveFromYear <= 2014):
-                    miskolc[i].Active2014 = 1
-                else:
-                    miskolc[i].Active2014 = 0
-            else:
-                miskolc[i].Active2014 = 0
-            if(ActiveUntilYear >= 2013):
-                if(ActiveFromYear <= 2013):
-                    miskolc[i].Active2013 = 1
-                else:
-                    miskolc[i].Active2013 = 0
-            else:
-                miskolc[i].Active2013 = 0
-            if(ActiveUntilYear >= 2012):
-                if(ActiveFromYear <= 2012):
-                    miskolc[i].Active2012 = 1
-                else:
-                    miskolc[i].Active2012 = 0
-            else:
-                miskolc[i].Active2012 = 0
-            if(ActiveUntilYear >= 2011):
-                if(ActiveFromYear <= 2011):
-                    miskolc[i].Active2011 = 1
-                else:
-                    miskolc[i].Active2011 = 0
-            else:
-                miskolc[i].Active2011 = 0
-            if(ActiveUntilYear >= 2010):
-                if(ActiveFromYear <= 2010):
-                    miskolc[i].Active2010 = 1
-                else:
-                    miskolc[i].Active2010 = 0
-            else:
-                miskolc[i].Active2010 = 0
-            if(ActiveUntilYear >= 2009):
-                if(ActiveFromYear <= 2009):
-                    miskolc[i].Active2009 = 1
-                else:
-                    miskolc[i].Active2009 = 0
-            else:
-                miskolc[i].Active2009 = 0
-            if(ActiveUntilYear >= 2008):
-                if(ActiveFromYear <= 2008):
-                    miskolc[i].Active2008 = 1
-                else:
-                    miskolc[i].Active2008 = 0
-            else:
-                miskolc[i].Active2008 = 0
-        else:
-            miskolc[i].Active2008 = 0
-            miskolc[i].Active2009 = 0
-            miskolc[i].Active2010 = 0
-            miskolc[i].Active2011 = 0
-            miskolc[i].Active2012 = 0
-            miskolc[i].Active2013 = 0
-            miskolc[i].Active2014 = 0
-            miskolc[i].Active2015 = 0
-            miskolc[i].Active2016 = 0
-            miskolc[i].Active2017 = 0
-            miskolc[i].Active2018 = 0
-        
-        # miskolc[i].ActiveFromYear = miskolc[i].ActiveFrom[-4:]
-        # miskolc[i].ActiveUntilYear = miskolc[i].ActiveUntil[-4:]
-
-    print("Miskolc done.")
-    return miskolc
+def calculateBranch(miskolc, nace):
+    print("Calculating -> ")
+    for i in tqdm(range(len(nace))):
+        Active2008Sum = 0
+        Active2009Sum = 0
+        Active2010Sum = 0
+        Active2011Sum = 0
+        Active2012Sum = 0
+        Active2013Sum = 0
+        Active2014Sum = 0
+        Active2015Sum = 0
+        Active2016Sum = 0
+        Active2017Sum = 0
+        Active2018Sum = 0
+        for j in range(len(miskolc)):
+            Active2008 = int(miskolc[j].Active2008)
+            Active2009 = int(miskolc[j].Active2009)
+            Active2010 = int(miskolc[j].Active2010)
+            Active2011 = int(miskolc[j].Active2011)
+            Active2012 = int(miskolc[j].Active2012)
+            Active2013 = int(miskolc[j].Active2013)
+            Active2014 = int(miskolc[j].Active2014)
+            Active2015 = int(miskolc[j].Active2015)
+            Active2016 = int(miskolc[j].Active2016)
+            Active2017 = int(miskolc[j].Active2017)
+            Active2018 = int(miskolc[j].Active2018)
+            if miskolc[j].CLASS != '' and nace[i].CLASS != '' and miskolc[j].CLASS.strip(' ') == nace[i].CLASS.strip(' '):
+                Active2008Sum = Active2008Sum + Active2008
+                Active2009Sum = Active2009Sum + Active2009
+                Active2010Sum = Active2010Sum + Active2010
+                Active2011Sum = Active2011Sum + Active2011
+                Active2012Sum = Active2012Sum + Active2012
+                Active2013Sum = Active2013Sum + Active2013
+                Active2014Sum = Active2014Sum + Active2014
+                Active2015Sum = Active2015Sum + Active2015
+                Active2016Sum = Active2016Sum + Active2016
+                Active2017Sum = Active2017Sum + Active2017
+                Active2018Sum = Active2018Sum + Active2018
+                nace[i].Active2008Sum = Active2008Sum
+                nace[i].Active2009Sum = Active2009Sum
+                nace[i].Active2010Sum = Active2010Sum
+                nace[i].Active2011Sum = Active2011Sum
+                nace[i].Active2012Sum = Active2012Sum
+                nace[i].Active2013Sum = Active2013Sum
+                nace[i].Active2014Sum = Active2014Sum
+                nace[i].Active2015Sum = Active2015Sum
+                nace[i].Active2016Sum = Active2016Sum
+                nace[i].Active2017Sum = Active2017Sum
+                nace[i].Active2018Sum = Active2018Sum
+    print("Done.")
+    return nace
 
 
 def Writer(output, head, data):
-    print("Writing Miskolc-out")
+    print("Writing data out")
     write.writer(output, head, data)
+    print("Done")
+
 
 # for debugging purposes:
 if __name__ == '__main__':
-    calculateBranch(miskolc)
-    Writer(out1, head1, miskolc)
+    calculateBranch(miskolc, nace)
+    Writer(out1, head1, nace)
     print(" ")
